@@ -4,7 +4,7 @@ spring:
 
   datasource:
     # URL di connessione (di default PostgreSQL su docker espone la 5432)
-    url: jdbc:postgresql://localhost:5432/sio_db
+    url: jdbc:postgresql://localhost:5432/sio_db?currentSchema=sio_schema
     username: sio_user
     password: sio_password
     driver-class-name: org.postgresql.Driver
