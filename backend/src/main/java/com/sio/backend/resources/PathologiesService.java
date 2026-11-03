@@ -1,6 +1,8 @@
 package com.sio.backend.resources;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,16 +51,16 @@ public class PathologiesService {
         repo.deleteById(code);
     }
 
-    public void editPathology(PathologiesDTO dto) {
-        Optional<Pathologies> entity = repo.findById(dto.code());
+    @Transactional
+    public PathologiesDTO editPathology(PathologiesDTO dto) {
+        Pathologies e = repo.findById(dto.code())
+                .orElseThrow(() -> new EntityNotFoundException("Patologia con codce: " + dto.code() + " non trovata"));
 
-        if(entity.isEmpty()) throw new NoSuchElementException("Patologia cercata, non trovata");
+        e.setDescription(dto.description());
 
-        // if(entity.get().getCode().equals(dto.code())) throw new Exception("Codici id non corrispondenti");
+        Pathologies savedEntity = repo.save(e);
 
-        repo.deleteById(entity.get().getCode());
-
-        repo.save(mapper.toEntity(dto));
+        return mapper.toDTO(savedEntity);
     }
 
 }

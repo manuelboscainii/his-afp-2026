@@ -68,23 +68,23 @@ public class ApiResponse<T> {
     }
 
     // -- FAIL --
-    public static <T> ApiResponse<T> fail(String message, Integer statusCode, String stackTrace) {
+    public static <T> ApiResponse<T> fail(String message, Integer code) {
         return ApiResponse.<T>builder()
                 .status(ApiResponseStatus.FAIL)
-                .statusCode(statusCode)
                 .timestamp(Instant.now())
                 .message(message)
-                .stackTrace(stackTrace)
+                .statusCode(code)
                 .build();
     }
 
-    // Overload di FAIL nel caso in cui il fail contenga una lista di errori (es. validazioni dei campi)
-    public static <T extends Collection<?>> ApiResponse<T> fail(T data, Integer statusCode) {
+    // Overload di FAIL nel caso in cui il fail contenga una lista di errori (es. Validazioni dei campi)
+    public static <T extends Collection<?>> ApiResponse<T> fail(String message, Integer statusCode, String errorCode) {
         return ApiResponse.<T>builder()
                 .status(ApiResponseStatus.FAIL)
+                .message(message)
                 .statusCode(statusCode)
                 .timestamp(Instant.now())
-                .data(data)
+                .errorCode(errorCode)
                 .build();
     }
 }

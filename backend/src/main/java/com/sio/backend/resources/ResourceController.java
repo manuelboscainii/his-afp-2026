@@ -2,6 +2,7 @@ package com.sio.backend.resources;
 
 import com.sio.backend.generics.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,18 +44,23 @@ public class ResourceController {
 
     // Endpoint to delete a pathology by its code
     @DeleteMapping("/pathologies")
-    public void deletePathology(@RequestParam String code) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<Void> deletePathology(@RequestParam String code) {
         pathologiesService.deletePathology(code);
+
+        return ApiResponse.success((Void) null);
     }
 
     @PutMapping("/pathologies")
-    public void editPathology(@RequestBody PathologiesDTO dto) {
-        pathologiesService.editPathology(dto);
+    public ApiResponse<PathologiesDTO> editPathology(@RequestBody PathologiesDTO dto) {
+        PathologiesDTO newDto = pathologiesService.editPathology(dto);
+        return ApiResponse.success(newDto);
     }
 
     @GetMapping("/sim-error")
     public ApiResponse<PathologiesDTO> getSimError() throws Exception {
         throw new Exception("Eccezione dinamica lanciata");
+        // throw new IllegalArgumentException("Dati non validi");
         // return ApiResponse.error("Messaggio di errore simulato", 500);
     }
 
