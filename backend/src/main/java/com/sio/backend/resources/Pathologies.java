@@ -1,4 +1,4 @@
-package com.sio.backend.Resources.pathology;
+package com.sio.backend.resources;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,9 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
@@ -29,6 +28,7 @@ public class Pathologies {
     @Column(name = "description", nullable = false, length = 100)
     private String description;
 
+    @CreationTimestamp // serve per settare automaticamente la data di creazione dell'oggetto
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     private Instant createdAt;

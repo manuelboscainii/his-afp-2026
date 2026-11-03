@@ -1,4 +1,4 @@
-package com.sio.backend.Resources.pathology;
+package com.sio.backend.resources;
 
 import org.springframework.stereotype.Component;
 
