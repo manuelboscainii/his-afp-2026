@@ -1,6 +1,11 @@
 package com.sio.backend.resources;
 
 import com.sio.backend.generics.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Resources")
+@RequestMapping("/resources")
+@Tag(name = "Gestione risorse SIO", description = "Endpoint per la gestione delle risorse SIO")
 public class ResourceController {
 
     // Inject the PathologiesService to handle business logic
@@ -23,15 +29,31 @@ public class ResourceController {
     }
      */
 
+    @Operation(summary = "Recupera tutte le patologie", description = "Restituisce una lista di tutte le patologie disponibili")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200",
+                    description = "Elenco delle patologie recuperato con successo"
+            )
+    })
     @GetMapping("/pathologies")
-    public ApiResponse<List<PathologiesDTO>> getAllPathologies() {
+    public ApiResponse<List<PathologiesDTO>> getAllPathologies(){
         return ApiResponse.success(
                 pathologiesService.getAllPathologies()
         );
     }
 
+    @Operation(
+            summary = "Recupera una patologia per codice",
+            description = "Restituisce i dettagli di una patologia specifica in base al codice fornito"
+    )
     @GetMapping("/pathologies/{code}")
-    public ApiResponse<PathologiesDTO> getPathologiesByCode(@PathVariable String code) {
+    public ApiResponse<PathologiesDTO> getPathologiesByCode(
+            @Parameter(description = "Codice identificativo della patologia")
+            @Valid
+            @PathVariable String code
+    )
+    {
         PathologiesDTO dto = pathologiesService.getPathologiesById(code);
         return ApiResponse.success(dto);
     }

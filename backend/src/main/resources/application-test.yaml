@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: sio-backend
+
+  datasource:
+    # URL di connessione (di default PostgreSQL su docker espone la 5432)
+    url: jdbc:postgresql://localhost:5432/sio_db?currentSchema=sio_schema
+    username: sio_user
+    password: sio_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    # Mostra le query SQL in console (utilissimo per la didattica!)
+    show-sql: true
+    hibernate:
+      # 'none' perché le tabelle sono già create dal file init.sql
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+
+# Configurazione porta del backend
+server:
+  port: 8080
