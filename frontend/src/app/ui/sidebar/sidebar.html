@@ -1,0 +1,20 @@
+<aside
+  class="w-24 h-full flex flex-col shrink-0 select-none shadow-xl backdrop-opacity-5"
+>
+  <nav
+    class="flex-1 p-3 space-y-1 overflow-auto items-center"
+  >
+    @for (item of navItems(); track item.route){
+      <a
+        [routerLink]="item.route"
+        routerLinkActive="bg-primary-50 text-primary-600 font semibold"
+        class="flex flex-col content-center items-center gap-3 py-2.5 cursor-pointer"
+        [pTooltip]="item.label"
+        tooltipPosition="right"
+        [showDelay]="500"
+      >
+        <i [class]="item.icon" style="font-size: 1.3rem"></i>
+      </a>
+    }
+  </nav>
+</aside>
