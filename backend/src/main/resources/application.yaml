@@ -1,9 +1,9 @@
 spring:
   application:
     name: sio-backend
-    profiles:
-      active:
-        - dev # Profilo di sviluppo attivo di default
+  profiles:
+    active:
+      - dev # Profilo di sviluppo attivo di default
 
 # Configurazione porta del backend
 server:
@@ -13,4 +13,16 @@ springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
-      path: /swagger-ui.html
+    path: /swagger-ui.html
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      cors:
+        allowed-origins:
+          - http://localhost:4200
+        allowed-methods:
+          - GET

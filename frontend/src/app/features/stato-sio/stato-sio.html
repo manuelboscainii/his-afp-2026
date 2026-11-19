@@ -1,1 +1,18 @@
 <p>stato-sio works!</p>
+@if (statoSioSrv.lastChecked() !== null){
+  <p>Last Checked: {{statoSioSrv.lastChecked() | date: 'dd/MM/yyyy'}}</p>
+}
+<p>
+  {{statoSioSrv.statoSio() | json}}
+</p>
+
+<p>
+
+</p>
+
+<p-button
+  label="Aggiorna dati"
+  icon="pi pi-refresh"
+  (click)="statoSioSrv.fetchStatoSio()"
+  [loading]="statoSioSrv.loading()"
+/>

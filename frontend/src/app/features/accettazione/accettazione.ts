@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './accettazione.css',
   templateUrl: './accettazione.html',
 })
-export class Accettazione {}
+export class Accettazione {
+
+}
