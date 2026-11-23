@@ -7,40 +7,27 @@
     <img
       class="w-40"
       alt="logo azienda sanitaria"
-      src="logo-asuit.svg">
+      ngSrc="logo-asuit.svg" height="16" width="16">
   </div>
+
   <!-- DIVIDER -->
   <!--  <div></div>-->
   <p-divider layout="vertical"/>
+
   <!-- STRUTTURA + REPARTO -->
   <div>
     <!--  REPARTO  -->
     <h1 class="text-4xl font-bold">{{reparto()}}</h1>
     <!--  STRUTTURA  -->
     <p>
-      {{struttura()}} {{ambiente()}}
-      @switch (ambiente()){
-        @case ('T'){
-          <p-tag
-            severity="info"
-            value="{{versione()}} - {{ambiente()}}"
-          />
-        }
-        @case ('P'){
-          <p-tag
-            severity="success"
-            value="{{versione()}} - {{ambiente()}}"
-          />
-        }
-        @default {
-          <p-tag
-            severity="contrast"
-            value="{{versione()}} - {{ambiente()}}"
-          />
-        }
-      }
+      {{struttura()}}
     </p>
   </div>
+  <div>
+    <sio-pathologies-dropdown [selectedPathology]="patho" />
+    {{patho() || 'NOPE'}}
+  </div>
+
   <!-- AZIONI -->
   <div class="ml-auto mr-4">
     <sio-toggle-theme/>

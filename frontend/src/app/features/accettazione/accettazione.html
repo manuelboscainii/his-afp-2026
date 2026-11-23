@@ -1,5 +1,34 @@
-<p>accettazione works!</p>
-<sio-search-input
-  label="Ricerca Codice Fiscale"
-  placeholder=""
-/>
+<p-card header="Ricerca codice fiscale con input/output/model">
+  <div class="space-y-4">
+    <sio-search-input
+      label="Ricerca Codice Fiscale"
+      [placeholder]="placeholder()"
+
+      [(value)]="searchText"
+
+      (search)="eseguiRicerca($event)"
+    />
+
+    <div class="fles items-center justify-between p-3">
+      <div class="space-y-1">
+        <p>Testo sincronizzato (model): {{searchText() || '-'}}</p>
+        <p>Ultima ricerca confermata (output): {{lastSearch() || '-'}}</p>
+      </div>
+      <p-button
+        label="Reset"
+        icon=""
+        severity="secondary"
+        size="small"
+        (onClick)="reset()"
+      />
+      <p-button
+        label="Esempio"
+        icon=""
+        severity="secondary"
+        size="small"
+        (onClick)="setExampleValue()"
+      />
+    </div>
+
+  </div>
+</p-card>

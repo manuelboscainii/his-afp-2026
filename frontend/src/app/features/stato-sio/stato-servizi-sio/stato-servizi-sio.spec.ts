@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { StatoSio } from '../stato-sio';
+import { StatoSio } from './stato-servizi-sio';
 
 describe('StatoSio', () => {
   let service: StatoSio;

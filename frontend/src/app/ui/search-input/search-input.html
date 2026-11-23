@@ -18,7 +18,8 @@
     <p-button
       label="Cerca"
       icon="pi pi-search"
-      [disabled]="value.trim()"
+      [disabled]="value().trim().length === 0"
+      (onClick)="onSearch()"
     />
   </div>
 </div>

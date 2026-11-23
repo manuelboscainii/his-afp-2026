@@ -1,13 +1,12 @@
 import { inject, Service, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IStatoServizioSio, STATO_SIO_MOCK} from './stato-servizi-sio.models';
+import { IStatoServiziSio, STATO_SIO_MOCK } from './stato-servizi-sio.models';
 
-
-@Service()
+@Service({autoProvided: false})
 export class StatoServiziSio {
   readonly #http = inject(HttpClient);
 
-  readonly #statoSio = signal<IStatoServizioSio>(STATO_SIO_MOCK); // Stato SIO privato come segnale reattivo
+  readonly #statoSio = signal<IStatoServiziSio>(STATO_SIO_MOCK);
   readonly #loading = signal<boolean>(false);
   readonly #lastChecked = signal<Date | null>(null);
 
@@ -21,25 +20,24 @@ export class StatoServiziSio {
 
   public fetchStatoSio() {
     this.#loading.set(true);
-    this.#http.get("http://localhost:8080/actuator/health")
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.#statoSio.set(res);
-          this.#lastChecked.set(new Date());
-          this.#loading.set(false);
-        },
-        error: (err: HttpErrorResponse) => {
-          console.error(err);
-          // this.#loading.set(false);
-          if (err.status === 503) {
-             console.log(err.error);
-             this.#statoSio.set(err.error);
-          }
-          this.
+    this.#http.get<IStatoServiziSio>('http://localhost:8080/actuator/health').subscribe({
+      next: (res) => {
+        console.log(res);
+        this.#statoSio.set(res);
+        this.#lastChecked.set(new Date());
+        this.#loading.set(false);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err.error);
+        if (err.status === 503) {
+          console.log(err.error);
+          this.#statoSio.set(err.error);
+        }else{
+          this.#statoSio.set(STATO_SIO_MOCK);
         }
-        }
-      )
+        this.#loading.set(false);
+        this.#lastChecked.set(new Date());
+      },
+    });
   }
-
 }

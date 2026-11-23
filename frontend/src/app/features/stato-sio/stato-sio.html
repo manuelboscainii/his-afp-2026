@@ -1,18 +1,104 @@
-<p>stato-sio works!</p>
-@if (statoSioSrv.lastChecked() !== null){
-  <p>Last Checked: {{statoSioSrv.lastChecked() | date: 'dd/MM/yyyy'}}</p>
-}
-<p>
-  {{statoSioSrv.statoSio() | json}}
-</p>
+<section>
+  <div class="flex items-center gap-3">
+    @if (statoSioSrv.lastChecked(); as lastDate){
+      <span class="text-xs text-surface-500">
+        Ultimo controllo: {{lastDate | date: 'HH:mm:ss'}}
+      </span>
+    }
+    <p-button
+      label="Aggiorna"
+      icon="pi pi-refresh"
+      [loading]="statoSioSrv.loading()"
+      (onClick)="statoSioSrv.fetchStatoSio()"
+    />
+  </div>
 
-<p>
+  <div class="grid grid-cols-1 gap-6">
+    <p-card>
+      <ng-template #header>
+          <div class="flex items-center justify-between px-5 pt-5">
+            <div class="flex items-center gap-2 font-semibold text-lg">
+              <span>Backend SIO</span>
+              <p-tag [value]="statoGenerale()" [severity]="getSeverity(statoGenerale())"/>
+            </div>
+          </div>
+      </ng-template>
 
-</p>
+      <div class="space-y-2 text-sm">
+        <p class="flex justify-between">
+          <span>Endpoint Actuator</span>
+          <span class="font-mono text-xs">/actuator/health</span>
+        </p>
+        <p class="flex justify-between">
+          <span>Ping Backend</span>
+          <span class="font-semibold">{{statoSioSrv.statoSio().components.ping.status}}</span>
+        </p>
+      </div>
+    </p-card>
+  </div>
 
-<p-button
-  label="Aggiorna dati"
-  icon="pi pi-refresh"
-  (click)="statoSioSrv.fetchStatoSio()"
-  [loading]="statoSioSrv.loading()"
-/>
+<!--  DATABASE-->
+  <div class="grid grid-cols-1 gap-6">
+    <p-card>
+      <ng-template #header>
+        <div class="flex items-center justify-between px-5 pt-5">
+          <div class="flex items-center gap-2 font-semibold text-lg">
+            <span>Database</span>
+            <p-tag [value]="statoDb().status" [severity]="getSeverity(statoDb().status)"/>
+          </div>
+        </div>
+      </ng-template>
+
+      @if (statoDb().status === 'UP'){
+        <div class="space-y-2 text-sm">
+          <p class="flex justify-between">
+            <span>Motore DB</span>
+            <span class="font-mono text-xs">{{statoDb().details.database}}</span>
+          </p>
+          <p class="flex justify-between">
+            <span>Query di verifica</span>
+            <span class="font-semibold">{{statoDb().details.validationQuery}}</span>
+          </p>
+        </div>
+      } @else {
+        <div class="space-y-2 text-sm">
+          <p class="flex justify-between">
+            <span>Errore: </span>
+            <span class="font-mono text-xs">{{statoDb().details.error}}</span>
+          </p>
+        </div>
+      }
+    </p-card>
+  </div>
+
+<!--  DISCO-->
+  <div class="grid grid-cols-1 gap-6">
+    <p-card>
+      <ng-template #header>
+        <div class="flex items-center justify-between px-5 pt-5">
+          <div class="flex items-center gap-2 font-semibold text-lg">
+            <span>Storage</span>
+            <p-tag [value]="statoDisco().status" [severity]="getSeverity(statoDisco().status)"/>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="space-y-1 text-sm">
+        @if (calcDiskSpace().gbTot > 0){
+          <div class="flex justify-between">
+            <span>Spazio libero</span>
+            <span class="font-semibold">
+              {{calcDiskSpace().gbFree | number: '1.1-2'}} GB /
+              {{calcDiskSpace().gbTot | number: '1.1-2'}} GB
+            </span>
+            <span>
+              <p-progress-bar [value]="calcDiskSpace().gbUsed"/>
+            </span>
+          </div>
+        } @else {
+          <p class="italic">Dati sul disco non disponibili</p>
+        }
+      </div>
+    </p-card>
+  </div>
+</section>

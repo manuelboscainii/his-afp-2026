@@ -1,22 +1,25 @@
 import { Component, input, model, output } from '@angular/core';
+import { InputText } from '@openng/optimus-ui/inputtext';
+import { Button } from '@openng/optimus-ui/button';
+
+let nextId = 0;
 
 @Component({
-  imports: [],
+  imports: [InputText, Button],
   selector: 'sio-search-input',
   styleUrl: './search-input.css',
   templateUrl: './search-input.html',
 })
 export class SearchInput {
-
   /**
    * INPUT:
    *  - label
    *  - placeholder
    *
-   * OUTPUT:
+   * OUTPUR:
    *  - search
    *
-   * TWO-WAY:
+   * TWO-WAY
    *  - value
    */
 
@@ -30,16 +33,15 @@ export class SearchInput {
   readonly search = output<string>();
 
   protected onInput(event: Event) {
-    const text = (event.target) as HTMLInputElement;
+    const text = (event.target as HTMLInputElement).value;
 
     this.value.set(text);
   }
 
-  protected onSearch(){
+  protected onSearch() {
     const trimmed = this.value().trim();
     if (trimmed) {
       this.search.emit(trimmed);
     }
   }
-
 }

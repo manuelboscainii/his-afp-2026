@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Resources } from '../../core/resources/resources';
 
 @Component({
   imports: [],
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './lista-pz.css',
   templateUrl: './lista-pz.html',
 })
-export class ListaPz {}
+export class ListaPz {
+  protected readonly resources = inject(Resources);
+
+  constructor() {
+    this.resources.fetchPatologie();
+  }
+}

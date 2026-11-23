@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { ListaPz } from './features/lista-pz/lista-pz';
-import { Accettazione } from './features/accettazione/accettazione';
-import { StatoSio } from './features/stato-sio/stato-sio';
 import { MainLayout } from './layout/main-layout/main-layout';
 import { RisLayout } from './layout/ris-layout/ris-layout';
+import { StatoServiziSio } from './features/stato-sio/stato-servizi-sio/stato-servizi-sio';
+import { RoutingError } from './ui/errors/routing-error/routing-error';
 
+// /ris
 export const routes: Routes = [
   {
     path: '',
@@ -18,32 +18,29 @@ export const routes: Routes = [
       {
         path: 'lista-pz',
         loadComponent: () =>
-          import('./features/lista-pz/lista-pz')
-            .then((m) => m.ListaPz),
+          import('./features/lista-pz/lista-pz').then((m) => m.ListaPz),
       },
       {
         path: 'accettazione',
-        providers: [StatoSio],
         loadComponent: () =>
-          import('./features/accettazione/accettazione')
-            .then((m) => m.Accettazione),
+          import('./features/accettazione/accettazione').then((m) => m.Accettazione),
       },
       {
-        path: 'stato-sio',
+        path: 'stato-servizi-sio',
+        providers: [StatoServiziSio],
         loadComponent: () =>
-          import('./features/stato-sio/stato-sio')
-            .then((m) => m.StatoSio),
-      }
-    ]
+          import('./features/stato-sio/stato-sio').then((m) => m.StatoSio),
+        errorComponent: RoutingError
+      },
+    ],
   },
   {
     path: 'ris',
     component: RisLayout,
-    children: []
   },
   {
     path: '**',
     redirectTo: 'lista-pz',
-    pathMatch: 'full',
+    pathMatch: 'full'
   }
 ];

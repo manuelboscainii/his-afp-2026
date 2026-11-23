@@ -3,7 +3,7 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "a5ac307d-7028-4e79-aca7-94fe3629223c"
+    "analytics": "6cb7ab9b-efb4-4913-89ca-b7b475bfd3f1"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -11,7 +11,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:service": {
-          "flat": true
+          "flat": false
         }
       },
       "root": "",
@@ -29,9 +29,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ]
+            "styles": ["src/styles.css"]
           },
           "configurations": {
             "production": {

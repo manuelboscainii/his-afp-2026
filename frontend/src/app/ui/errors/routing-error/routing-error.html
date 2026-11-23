@@ -1,0 +1,13 @@
+<p class="text-xl font-semibold">Si è spaccato qualcosa</p>
+
+<p class="text-md">Messaggio errore:
+  <span class="font-mono italic">
+    {{error()?.message}}
+  </span>
+</p>
+
+<p-button
+  label="Torna a lista pazienti"
+  // routerLink="/lista-pz"
+  (onClick)="redirectToListaPz()"
+/>

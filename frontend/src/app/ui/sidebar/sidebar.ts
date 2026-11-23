@@ -1,15 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Tooltip } from '@openng/optimus-ui/tooltip';
+import { Tag } from '@openng/optimus-ui/tag';
 
-interface INavItem {
+interface INavItem{
   label: string;
   icon: string;
   route: string;
 }
+type TAmbiente = 'S' | 'T' | 'P';
 
 @Component({
-  imports: [RouterLink, Tooltip, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, Tooltip],
   selector: 'sio-sidebar',
   styleUrl: './sidebar.css',
   templateUrl: './sidebar.html',
@@ -29,7 +31,19 @@ export class Sidebar {
     {
       label: 'Stato SIO',
       icon: 'pi pi-server',
-      route: '/stato-sio',
+      route: '/stato-servizi-sio',
     },
   ]);
+  readonly versione = signal('v0.0.1');
+  readonly ambiente = signal<TAmbiente>('T');
 }
+
+
+
+
+
+
+
+
+
+
