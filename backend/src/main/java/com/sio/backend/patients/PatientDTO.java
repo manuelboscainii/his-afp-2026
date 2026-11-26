@@ -24,6 +24,18 @@ public record PatientDTO(
 
         @NotBlank(message = "Il sesso è obbligatorio")
         @Pattern(regexp = "^[MF]$", message = "Il sesso deve essere 'M' o 'F'")
-        PatientSex sex
-) {
-}
+        PatientSex sex,
+
+        @Size(max = 255, message = "La via puo' essere lunga massimo 255 caratteri")
+        String indirizzoVia,
+
+        @Size(max = 20, message = "Il numero civico puo' essere lungo massimo 20 caratteri")
+        String indirizzoCivico,
+
+        @Size(max = 100, message = "Il comune puo' essere lungo massimo 100 caratteri")
+        String comune,
+
+        @Size(max = 5, message = "La provincia puo' essere lunga massimo 5 caratteri, usare la sigla della provincia (es. Trento = TN)")
+        String provincia
+
+) {}

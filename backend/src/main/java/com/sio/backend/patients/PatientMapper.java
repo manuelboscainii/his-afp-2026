@@ -10,7 +10,11 @@ class PatientMapper {
                 pt.getNome(),
                 pt.getCognome(),
                 pt.getDataNascita(),
-                pt.getSex()
+                pt.getSex(),
+                pt.getIndirizzoVia(),
+                pt.getIndirizzoCivico(),
+                pt.getComune(),
+                pt.getProvincia()
         );
     }
 
@@ -23,6 +27,10 @@ class PatientMapper {
         pt.setCognome(dto.cognome());
         pt.setDataNascita(dto.dataNascita());
         pt.setSex(dto.sex());
+        pt.setIndirizzoVia(dto.indirizzoVia());
+        pt.setIndirizzoCivico(dto.indirizzoCivico());
+        pt.setComune(dto.comune());
+        pt.setProvincia(dto.provincia());
 
         return pt;
     }

@@ -48,6 +48,11 @@ class PatientService {
                     existPz.setDataNascita(pt.dataNascita());
                     existPz.setSex(pt.sex());
 
+                    existPz.setIndirizzoVia(pt.indirizzoVia());
+                    existPz.setIndirizzoCivico(pt.indirizzoCivico());
+                    existPz.setComune(pt.comune());
+                    existPz.setProvincia(pt.provincia());
+
                     return existPz;
                 })
                 .orElseGet(() -> repo.save(mapper.toEntity(pt)));
